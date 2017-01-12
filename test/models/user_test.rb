@@ -38,7 +38,7 @@ class UserTest < ActiveSupport::TestCase
       @user.email = valid_address
       assert @user.valid?, "#{valid_address.inspect} should be valid"
     end
- end
+  end
 
   test "email validation should reject invalid addresses" do
     invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
@@ -72,4 +72,9 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
   end
+
+  test "authenticated? should return false for a user with nil digest" do
+    assert_not @user.authenticated?('')
+  end
+
 end
